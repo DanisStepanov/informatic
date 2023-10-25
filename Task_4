@@ -1,0 +1,19 @@
+#include <iostream>
+using namespace std;
+int main()
+{ int year;
+    cout << "Введите год: ";
+    cin >> year;
+    if (year % 4 == 0){
+         if (year % 100 == 0){
+             if (year % 400 == 0)
+                cout << year << " Висакосный.";
+            else
+                cout << year << " Не висакосный.";
+         }
+       else
+            cout << year << " Висакосный.";
+    }
+    else
+        cout << year << " Не висакосный.";
+    return 0; }
