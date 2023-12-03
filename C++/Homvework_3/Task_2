@@ -1,0 +1,53 @@
+#include <iostream>
+#include <queue>
+
+int main() {
+    std::queue<int> myQueue;
+
+    myQueue.push(1);
+    std::cout << "Добавлен элемент 1. Содержимое очереди: ";
+    std::queue<int> tempQueue = myQueue; // Создаем временную очередь для вывода содержимого
+    while (!tempQueue.empty()) {
+        std::cout << tempQueue.front() << " ";
+        tempQueue.pop();
+    }
+    std::cout << std::endl;
+
+    myQueue.push(2);
+    std::cout << "Добавлен элемент 2. Содержимое очереди: ";
+    tempQueue = myQueue;
+    while (!tempQueue.empty()) {
+        std::cout << tempQueue.front() << " ";
+        tempQueue.pop();
+    }
+    std::cout << std::endl;
+
+    myQueue.push(3);
+    std::cout << "Добавлен элемент 3. Содержимое очереди: ";
+    tempQueue = myQueue;
+    while (!tempQueue.empty()) {
+        std::cout << tempQueue.front() << " ";
+        tempQueue.pop();
+    }
+    std::cout << std::endl;
+
+    myQueue.pop();
+    std::cout << "Извлечен элемент. Содержимое очереди: ";
+    tempQueue = myQueue;
+    while (!tempQueue.empty()) {
+        std::cout << tempQueue.front() << " ";
+        tempQueue.pop();
+    }
+    std::cout << std::endl;
+
+    myQueue.pop();
+    std::cout << "Извлечен элемент. Содержимое очереди: ";
+    tempQueue = myQueue;
+    while (!tempQueue.empty()) {
+        std::cout << tempQueue.front() << " ";
+        tempQueue.pop();
+    }
+    std::cout << std::endl;
+
+    return 0;
+}

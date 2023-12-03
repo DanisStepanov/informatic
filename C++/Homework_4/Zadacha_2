@@ -1,0 +1,86 @@
+#include <iostream>
+#include <stdexcept>
+
+// Базовый класс "Product"
+class Product {
+public:
+    // Конструктор класса
+    Product(double price, double weight) : price(price), weight(weight) {
+        if (price <= 0 || weight <= 0) {
+            throw std::invalid_argument("Цена и вес должны быть положительными числами.");
+        }
+    }
+
+    // Метод для расчета общей стоимости продукта
+    double getTotalPrice() const {
+        return price * weight;
+    }
+
+protected:
+    // Атрибуты класса
+    double price;
+    double weight;
+};
+
+// Класс "Apple", унаследованный от базового класса "Product"
+class Apple : public Product {
+public:
+    // Конструктор класса "Apple"
+    Apple(double price, double weight, std::string variety) : Product(price, weight), variety(variety) {
+        if (variety.empty()) {
+            throw std::invalid_argument("Сорт яблока не может быть пустым.");
+        }
+    }
+
+    // Метод для получения сорта яблока
+    std::string getVariety() const {
+        return variety;
+    }
+
+private:
+    // Дополнительный атрибут класса "Apple"
+    std::string variety;
+};
+
+// Класс "Orange", унаследованный от базового класса "Product"
+class Orange : public Product {
+public:
+    // Конструктор класса "Orange"
+    Orange(double price, double weight, std::string origin) : Product(price, weight), origin(origin) {
+        if (origin.empty()) {
+            throw std::invalid_argument("Страна происхождения апельсина не может быть пустой.");
+        }
+    }
+
+    // Метод для получения страны происхождения апельсина
+    std::string getOrigin() const {
+        return origin;
+    }
+
+private:
+    // Дополнительный атрибут класса "Orange"
+    std::string origin;
+};
+
+int main() {
+    try {
+        // Создание объектов Apple и Orange с некорректными значениями
+        Apple apple(-1.5, 200, "Golden"); // Ошибка: отрицательная цена
+    } catch (const std::invalid_argument& e) {
+        std::cerr << "Ошибка при создании яблока: " << e.what() << std::endl;
+    }
+
+    try {
+        Orange orange(2.5, -150, "Spain"); // Ошибка: отрицательный вес
+    } catch (const std::invalid_argument& e) {
+        std::cerr << "Ошибка при создании апельсина: " << e.what() << std::endl;
+    }
+
+    try {
+        Orange orange(2.5, 150, ""); // Ошибка: пустая страна происхождения
+    } catch (const std::invalid_argument& e) {
+        std::cerr << "Ошибка при создании апельсина: " << e.what() << std::endl;
+    }
+
+    return 0;
+}

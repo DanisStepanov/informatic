@@ -1,0 +1,66 @@
+#include <iostream>
+#include <cmath>
+#include <vector>
+
+// Абстрактный класс "Фигура"
+class Shape {
+public:
+    // Чисто виртуальная функция для расчета площади
+    virtual double calculateArea() const = 0;
+
+    // Виртуальный деструктор
+    virtual ~Shape() {}
+};
+
+// Класс "Прямоугольник", реализующий интерфейс "Фигура"
+class Rectangle : public Shape {
+public:
+    // Конструктор класса
+    Rectangle(double width, double height) : width(width), height(height) {}
+
+    // Реализация метода calculateArea() для прямоугольника
+    double calculateArea() const override {
+        return width * height;
+    }
+
+private:
+    // Атрибуты класса
+    double width;
+    double height;
+};
+
+// Класс "Круг", реализующий интерфейс "Фигура"
+class Circle : public Shape {
+public:
+    // Конструктор класса
+    Circle(double radius) : radius(radius) {}
+
+    // Реализация метода calculateArea() для круга
+    double calculateArea() const override {
+        return M_PI * radius * radius;
+    }
+
+private:
+    // Атрибут класса
+    double radius;
+};
+
+int main() {
+    // Создание массива объектов типа "Фигура"
+    std::vector<Shape*> shapes;
+    shapes.push_back(new Rectangle(5, 10));
+    shapes.push_back(new Circle(3));
+
+    // Вызов метода calculateArea() для каждой фигуры
+    std::cout << "Площади фигур:" << std::endl;
+    for (const auto& shape : shapes) {
+        std::cout << "Площадь: " << shape->calculateArea() << std::endl;
+    }
+
+    // Очистка памяти от объектов
+    for (const auto& shape : shapes) {
+        delete shape;
+    }
+
+    return 0;
+}

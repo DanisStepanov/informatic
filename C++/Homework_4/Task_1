@@ -1,0 +1,34 @@
+#include <iostream>
+#include <string>
+
+// Определение класса "Собака"
+class Dog {
+public:
+    // Конструктор класса для установки начальных значений атрибутов
+    Dog(std::string name, int age) : name(name), age(age) {}
+
+    // Метод для вывода информации о собаке
+    void displayInfo() {
+        std::cout << "Собака: " << name << ", Возраст: " << age << " лет." << std::endl;
+    }
+
+private:
+    // Атрибуты класса
+    std::string name;
+    int age;
+};
+
+int main() {
+    // Создание объектов класса "Собака"
+    Dog dog1("Барон", 3);
+    Dog dog2("Рекс", 2);
+    Dog dog3("Лайка", 4);
+
+    // Вывод информации о каждой собаке
+    std::cout << "Информация о собаках:" << std::endl;
+    dog1.displayInfo();
+    dog2.displayInfo();
+    dog3.displayInfo();
+
+    return 0;
+}

@@ -1,0 +1,54 @@
+#include <iostream>
+#include <cmath>
+
+// Базовый класс "Фигура"
+class Shape {
+public:
+    // Виртуальная функция для расчета площади
+    virtual double calculateArea() const = 0;
+};
+
+// Подкласс "Прямоугольник", наследующий от базового класса "Фигура"
+class Rectangle : public Shape {
+public:
+    // Конструктор класса
+    Rectangle(double width, double height) : width(width), height(height) {}
+
+    // Переопределение метода calculateArea() для прямоугольника
+    double calculateArea() const override {
+        return width * height;
+    }
+
+private:
+    // Атрибуты класса
+    double width;
+    double height;
+};
+
+// Подкласс "Круг", наследующий от базового класса "Фигура"
+class Circle : public Shape {
+public:
+    // Конструктор класса
+    Circle(double radius) : radius(radius) {}
+
+    // Переопределение метода calculateArea() для круга
+    double calculateArea() const override {
+        return M_PI * radius * radius;
+    }
+
+private:
+    // Атрибут класса
+    double radius;
+};
+
+int main() {
+    // Создание объектов подклассов
+    Rectangle rectangle(5, 10);
+    Circle circle(3);
+
+    // Вывод площадей объектов
+    std::cout << "Площадь прямоугольника: " << rectangle.calculateArea() << " кв. ед." << std::endl;
+    std::cout << "Площадь круга: " << circle.calculateArea() << " кв. ед." << std::endl;
+
+    return 0;
+}

@@ -1,0 +1,17 @@
+#include <iostream>
+#include <queue>
+
+int main() {
+    std::queue<int> myQueue;
+
+    myQueue.push(1);
+    myQueue.push(2);
+    myQueue.push(3);
+
+    while (!myQueue.empty()) {
+        std::cout << "Извлечен элемент: " << myQueue.front() << std::endl;
+        myQueue.pop();
+    }
+
+    return 0;
+}
