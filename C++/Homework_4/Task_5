@@ -1,92 +1,54 @@
 #include <iostream>
-#include <string>
+#include <cmath>
 #include <vector>
 
-// Базовый класс "Фрукт"
-class Fruit {
+
+class Shape {
 public:
-    // Виртуальная функция для получения витаминов
-    virtual void getVitamins() const {
-        std::cout << "Этот фрукт содержит витамины." << std::endl;
-    }
+    virtual double calculateArea() const = 0;
+
+    virtual ~Shape() {}
 };
 
-// Подкласс "Яблоко", наследующий от базового класса "Фрукт"
-class Apple : public Fruit {
+
+class Rectangle : public Shape {
 public:
-    // Переопределение метода getVitamins() для яблока
-    void getVitamins() const override {
-        std::cout << "Яблоко содержит витамин C." << std::endl;
-    }
-};
+    Rectangle(double width, double height) : width(width), height(height) {}
 
-// Подкласс "Апельсин", наследующий от базового класса "Фрукт"
-class Orange : public Fruit {
-public:
-    // Переопределение метода getVitamins() для апельсина
-    void getVitamins() const override {
-        std::cout << "Апельсин содержит витамин C и фолиевую кислоту." << std::endl;
-    }
-};
-
-// Базовый класс "Транспортное Средство"
-class TransportVehicle {
-public:
-    // Конструктор класса
-    TransportVehicle(double speed, std::string type) : speed(speed), type(type) {}
-
-    // Виртуальная функция для получения информации о транспортном средстве
-    virtual void getInfo() const {
-        std::cout << "Транспортное средство типа " << type << " со скоростью " << speed << " км/ч." << std::endl;
-    }
-
-protected:
-    // Атрибуты класса
-    double speed;
-    std::string type;
-};
-
-// Подкласс "Автомобиль", наследующий от базового класса "Транспортное Средство"
-class Car : public TransportVehicle {
-public:
-    // Конструктор класса
-    Car(double speed, std::string type, std::string brand) : TransportVehicle(speed, type), brand(brand) {}
-
-    // Переопределение метода getInfo() для автомобиля
-    void getInfo() const override {
-        std::cout << "Автомобиль марки " << brand << ", типа " << type << " со скоростью " << speed << " км/ч." << std::endl;
+    double calculateArea() const override {
+        return width * height;
     }
 
 private:
-    // Дополнительный атрибут класса "Автомобиль"
-    std::string brand;
+    double width;
+    double height;
+};
+
+class Circle : public Shape {
+public:
+    Circle(double radius) : radius(radius) {}
+
+    double calculateArea() const override {
+        return M_PI * radius * radius;
+    }
+
+private:
+    double radius;
 };
 
 int main() {
-    // Создание массива объектов разных фруктов
-    std::vector<Fruit*> fruits;
-    fruits.push_back(new Apple());
-    fruits.push_back(new Orange());
+    std::vector<Shape*> shapes;
+    shapes.push_back(new Rectangle(5, 10));
+    shapes.push_back(new Circle(3));
 
-    // Вызов метода getVitamins() для каждого фрукта
-    std::cout << "Информация о витаминах во фруктах:" << std::endl;
-    for (const auto& fruit : fruits) {
-        fruit->getVitamins();
+    std::cout << "Площади фигур:" << std::endl;
+    for (const auto& shape : shapes) {
+        std::cout << "Площадь: " << shape->calculateArea() << std::endl;
     }
 
-    // Очистка памяти от объектов фруктов
-    for (const auto& fruit : fruits) {
-        delete fruit;
+    for (const auto& shape : shapes) {
+        delete shape;
     }
-
-    // Создание объектов разных транспортных средств
-    TransportVehicle vehicle1(60, "Велосипед");
-    Car car1(120, "Автомобиль", "Toyota");
-
-    // Вызов метода getInfo() для каждого транспортного средства
-    std::cout << "\nИнформация о транспортных средствах:" << std::endl;
-    vehicle1.getInfo();
-    car1.getInfo();
 
     return 0;
 }

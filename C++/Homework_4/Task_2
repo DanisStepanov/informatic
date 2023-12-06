@@ -2,10 +2,8 @@
 
 class BankAccount {
 public:
-    // Конструктор класса
     BankAccount(int accountNumber) : accountNumber(accountNumber), balance(0) {}
 
-    // Метод для пополнения счета
     void deposit(double amount) {
         if (amount > 0) {
             balance += amount;
@@ -15,7 +13,6 @@ public:
         }
     }
 
-    // Метод для снятия средств со счета
     void withdraw(double amount) {
         if (amount > 0 && amount <= balance) {
             balance -= amount;
@@ -26,16 +23,13 @@ public:
     }
 
 private:
-    // Атрибуты класса
     int accountNumber;
     double balance;
 };
 
 int main() {
-    // Создание объекта класса "БанковскийСчет"
     BankAccount account1(123456);
 
-    // Пополнение и снятие средств
     account1.deposit(1000);
     account1.withdraw(500);
     account1.withdraw(700);

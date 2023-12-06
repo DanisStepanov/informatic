@@ -1,66 +1,68 @@
 #include <iostream>
-#include <cmath>
-#include <vector>
+#include <string>
 
-// Абстрактный класс "Фигура"
-class Shape {
+
+class Person {
 public:
-    // Чисто виртуальная функция для расчета площади
-    virtual double calculateArea() const = 0;
+    Person(std::string name, int age) : name(name), age(age) {}
 
-    // Виртуальный деструктор
-    virtual ~Shape() {}
-};
-
-// Класс "Прямоугольник", реализующий интерфейс "Фигура"
-class Rectangle : public Shape {
-public:
-    // Конструктор класса
-    Rectangle(double width, double height) : width(width), height(height) {}
-
-    // Реализация метода calculateArea() для прямоугольника
-    double calculateArea() const override {
-        return width * height;
+    void displayInfo() const {
+        std::cout << "Имя: " << name << ", Возраст: " << age << " лет." << std::endl;
     }
 
 private:
-    // Атрибуты класса
-    double width;
-    double height;
+    std::string name;
+    int age;
 };
 
-// Класс "Круг", реализующий интерфейс "Фигура"
-class Circle : public Shape {
-public:
-    // Конструктор класса
-    Circle(double radius) : radius(radius) {}
 
-    // Реализация метода calculateArea() для круга
-    double calculateArea() const override {
-        return M_PI * radius * radius;
+class House {
+public:
+    House(int roomCount, std::string address) : roomCount(roomCount), address(address) {}
+
+    void displayInfo() const {
+        std::cout << "Дом по адресу: " << address << ", Количество комнат: " << roomCount << "." << std::endl;
     }
 
 private:
-    // Атрибут класса
-    double radius;
+    int roomCount;
+    std::string address;
+};
+
+class Resident : public Person {
+public:
+    Resident(std::string name, int age, House* house) : Person(name, age), house(house) {}
+
+    void linkWithHouse(House* newHouse) {
+        house = newHouse;
+    }
+
+    void displayResidentInfo() const {
+        displayInfo();
+        if (house != nullptr) {
+            std::cout << "Житель этого дома:" << std::endl;
+            house->displayInfo();
+        } else {
+            std::cout << "Этот житель не привязан к какому-либо дому." << std::endl;
+        }
+    }
+
+private:
+    House* house;
 };
 
 int main() {
-    // Создание массива объектов типа "Фигура"
-    std::vector<Shape*> shapes;
-    shapes.push_back(new Rectangle(5, 10));
-    shapes.push_back(new Circle(3));
+    House house1(3, "Улица Первая, 1");
+    Resident resident1("Иван", 25, &house1);
 
-    // Вызов метода calculateArea() для каждой фигуры
-    std::cout << "Площади фигур:" << std::endl;
-    for (const auto& shape : shapes) {
-        std::cout << "Площадь: " << shape->calculateArea() << std::endl;
-    }
+    std::cout << "Информация о жителе и его доме:" << std::endl;
+    resident1.displayResidentInfo();
 
-    // Очистка памяти от объектов
-    for (const auto& shape : shapes) {
-        delete shape;
-    }
+    House house2(2, "Улица Вторая, 2");
+    resident1.linkWithHouse(&house2);
+
+    std::cout << "\nОбновленная информация о жителе и его доме:" << std::endl;
+    resident1.displayResidentInfo();
 
     return 0;
 }
